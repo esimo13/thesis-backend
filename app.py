@@ -17,7 +17,7 @@ gru_model = tf.keras.models.load_model("gru_model.keras")
 scaler = joblib.load("scaler.pkl")
 
 app = Flask(__name__)
-CORS(app, origins="http://localhost:3000")
+CORS(app, origins="*")
 
 UPLOAD_FOLDER = 'uploads'
 if not os.path.exists(UPLOAD_FOLDER):
