@@ -17,7 +17,7 @@ gru_model = tf.keras.models.load_model("gru_model.keras")
 scaler = joblib.load("scaler.pkl")
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}},)
+CORS(app, resources={r"/*": {"origins": "*"}},)
 
 UPLOAD_FOLDER = 'uploads'
 if not os.path.exists(UPLOAD_FOLDER):
@@ -56,5 +56,5 @@ def predict():
     return jsonify({"prediction": class_mapping[predicted_class]})
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
+    port = int(os.environ.get("PORT", 10000))
     app.run(host="0.0.0.0", port=port)
