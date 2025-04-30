@@ -6,6 +6,9 @@ from flask import Flask, request, jsonify
 from preprocess import preprocess_input_txt
 from flask_cors import CORS  # Import CORS
 
+app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}},)
+
 # Check if model files exist, if not, run model.py
 if not os.path.exists("scaler.pkl") or not os.path.exists("svm_model.pkl") or not os.path.exists("gru_model.keras"):
     print("Model files missing. Training models now...")
@@ -16,8 +19,7 @@ svm_model = joblib.load("svm_model.pkl")
 gru_model = tf.keras.models.load_model("gru_model.keras")
 scaler = joblib.load("scaler.pkl")
 
-app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}},)
+
 
 UPLOAD_FOLDER = 'uploads'
 if not os.path.exists(UPLOAD_FOLDER):
