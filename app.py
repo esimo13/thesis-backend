@@ -5,6 +5,8 @@ import tensorflow as tf
 from flask import Flask, request, jsonify
 from preprocess import preprocess_input_txt
 from flask_cors import CORS  # Import CORS
+import logging
+logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}},)
@@ -28,7 +30,9 @@ if not os.path.exists(UPLOAD_FOLDER):
 @app.route('/')
 def home():
     return "EEG Seizure Detection API is Running!"
-
+@app.route('/ping', methods=['GET'])
+def ping():
+    return jsonify({"message": "pong"}), 200
 @app.route('/predict', methods=['POST'])
 def predict():
     if 'file' not in request.files:
